@@ -1,0 +1,17 @@
+
+docker
+-----------------------------------------------------
+docker container ls -a
+
+docker container rm 6afff1693cf4
+
+docker container start 6afff1693cf4
+
+docker container stop 6afff1693cf4
+
+
+docker-compose
+-----------------------------------------------------
+docker-compose down
+
+docker-compose up

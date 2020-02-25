@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+
+    mysql-db:
+        image: mysql:5.7.29
+        container_name: camunda_db
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_USER=camunda
+          - MYSQL_PASSWORD=camunda
+          - MYSQL_DATABASES=camunda
+        ports:
+          - "8050:3306"
+
+
+    camunda:
+        image: camunda/camunda-bpm-platform
+        container_name: camunda_bpm
+        ports:
+            - "8090:8080"
+        depends_on:
+            - mysql-db
+        environment:
+            - DB_DRIVER=com.mysql.jdbc.Driver
+            - DB_URL=jdbc:mysql://mysql-db:3306/camunda?useUnicode=true&createDatabaseIfNotExist=true
+            - DB_USERNAME=root
+            - DB_PASSWORD=root
+            - WAIT_FOR=mysql-db:3306
+            - WAIT_FOR_TIMEOUT=60
